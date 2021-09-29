@@ -1,0 +1,13 @@
+.gradle
+build/
+bin/
+
+### VS Code ###
+.vscode/
+.settings
+.classpath
+.project
+
+### Node ###
+node_modules
+.eslintcache
