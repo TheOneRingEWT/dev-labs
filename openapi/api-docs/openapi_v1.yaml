@@ -5,13 +5,134 @@ info:
   description: This service is for the management and storage of Do It App data.
   version: "1.0.0"
 
+servers:
+  - url: http://localhost:8080/api/v1
+
 paths:
-  /somepath:
+  /items:
     get:
-      operationId: getSomepath
+      tags:
+        - items
+      summary: Provide a list of to-do items
+      operationId: retrieveItemsList
       responses:
         200:
           description: OK
           content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItemList"
+    post:
+      tags:
+        - items
+      summary: Create a to-do item
+      operationId: createTodoItem
+      requestBody:
+        description: To-do item
+        required: true
+        content:
+          application/json:
             schema:
-             {}
+              $ref: "#/components/schemas/TodoItem"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
+  /items/{id}:
+    get:
+      tags:
+        - items
+      summary: Provide a list of to-do items
+      operationId: retrieveTodoItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: Todo item ID
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
+    put:
+      tags:
+        - items
+      summary: Update a to-do item
+      operationId: updateTodoItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: Todo item ID
+      requestBody:
+        description: To-do item
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoItem"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
+    delete:
+      tags:
+        - items
+      summary: Delete a to-do item
+      operationId: deleteTodoItem
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: Todo item ID
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
+
+components:
+  schemas:
+    TodoItemList:
+      title: To-do Item List
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/TodoItem"
+    TodoItem:
+      title: To-do Item
+      type: object
+      properties:
+        id:
+          description: Item ID
+          type: integer
+          format: int32
+        description:
+          description: Item description
+          type: string
+        completed:
+          description: Item completed
+          type: boolean
+      required:
+        - description
+        
