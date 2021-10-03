@@ -14,4 +14,5 @@ subprojects {
 
 dependencies {
     project 'openapi'
+    project 'api'
 }
