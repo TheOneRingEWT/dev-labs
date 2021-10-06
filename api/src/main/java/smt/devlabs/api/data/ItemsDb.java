@@ -2,6 +2,7 @@ package smt.devlabs.api.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +33,19 @@ public class ItemsDb {
     }
 
     public TodoItem findById(int id) {
-        return items.stream().filter(item -> id == item.getId()).findFirst().get();
+        return items.stream().filter(item -> item.getId().equals(id)).findFirst().get();
+    }
+
+    public TodoItem updateById(int id, TodoItem item) {
+
+        this.items = items.stream().map(todo -> {
+            if (id == todo.getId().intValue()) {
+                return item;
+            } else {
+                return todo;
+            }
+        }).collect(Collectors.toList());
+
+        return items.stream().filter(todo -> todo.getId().equals(id)).findFirst().get();
     }
 }

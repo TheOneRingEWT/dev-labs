@@ -29,4 +29,9 @@ public class ItemsStorage implements ItemsStorageApi {
     public TodoItem retrieveTodoItem(int id) {
         return db.findById(id);
     }
+
+    @Override
+    public TodoItem updateTodoItem(int id, TodoItem item) {
+        return db.updateById(id, item);
+    }
 }

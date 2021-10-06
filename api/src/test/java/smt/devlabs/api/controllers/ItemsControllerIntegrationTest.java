@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -80,7 +82,7 @@ public class ItemsControllerIntegrationTest {
 
     @Test
     @DisplayName("GET request to /items/{id} should return Response OK with a TodoItem with that ID")
-    public void whenTodoItemInDb_thenResponseOKWithTodoItem() {
+    public void whenRetrieveTodoItemInDb_thenResponseOKWithTodoItem() {
         // Arrange
         int givenId = 1234;
 
@@ -91,6 +93,28 @@ public class ItemsControllerIntegrationTest {
 
         // Act
         ResponseEntity<TodoItem> actual = this.restTemplate.getForEntity("/items/" + givenId, TodoItem.class);
+
+        // Assert
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(expected, actual.getBody());
+    }
+
+    @Test
+    @DisplayName("PUT request to /items/{id} should return Response OK with a modified TodoItem with that ID")
+    public void whenModifyTodoItemInDb_thenResponseOKWithTodoItem() {
+        // Arrange
+        int givenId = 1234;
+
+        TodoItem putItem = new TodoItem().id(givenId).description("new-description").completed(false);
+        HttpEntity<TodoItem> httpEntity = new HttpEntity<>(putItem);
+
+        when(mockItemsDb.updateById(givenId, putItem)).thenReturn(putItem);
+
+        TodoItem expected = putItem;
+
+        // Act
+        ResponseEntity<TodoItem> actual = this.restTemplate.exchange("/items/" + givenId, HttpMethod.PUT, httpEntity,
+                                                                     TodoItem.class);
 
         // Assert
         assertEquals(HttpStatus.OK, actual.getStatusCode());

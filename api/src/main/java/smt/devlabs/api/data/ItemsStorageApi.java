@@ -9,4 +9,6 @@ public interface ItemsStorageApi {
     public TodoItem createTodoItem(TodoItem todoItem);
 
     public TodoItem retrieveTodoItem(int id);
+
+    public TodoItem updateTodoItem(int id, TodoItem todoItem);
 }

@@ -119,4 +119,25 @@ public class ItemsDbTest {
         // Assert
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("Should be able to update item by id")
+    public void whenUpdateByIdCalled_thenReturnUpdatedItem() {
+        // Arrange
+        int givenId = 1224;
+        TodoItem updatedTodo = new TodoItem().id(givenId).description("new-description").completed(true);
+
+        TodoItem itemDb = new TodoItem().id(givenId).description("original-description").completed(false);
+
+        when(mockIdCounter.getNewId()).thenReturn(givenId);
+
+        TodoItem expected = updatedTodo;
+
+        // Act
+        subject.add(itemDb);
+        TodoItem actual = subject.updateById(givenId, updatedTodo);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }
