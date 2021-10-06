@@ -120,4 +120,28 @@ public class ItemsControllerIntegrationTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(expected, actual.getBody());
     }
+
+    @Test
+    @DisplayName("DELETE request to /items/{id} should return Response OK with the deleted TodoItem with that ID")
+    public void whenDeleteTodoItemInDb_thenResponseOKWithTodoItem() {
+        // Arrange
+        int givenId = 1234;
+
+        TodoItem itemInDb = new TodoItem().id(givenId).description("some-description").completed(false);
+        HttpEntity<TodoItem> httpEntity = new HttpEntity<>(itemInDb);  // Need for exchange
+
+        when(mockItemsDb.deleteById(givenId)).thenReturn(itemInDb);
+
+        TodoItem expected = itemInDb;
+
+        // Act
+
+        // Using exchange because delete() returns void and we need a Response
+        ResponseEntity<TodoItem> actual = this.restTemplate.exchange("/items/" + givenId, HttpMethod.DELETE, httpEntity,
+                                                                     TodoItem.class);
+
+        // Assert
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(expected, actual.getBody());
+    }
 }

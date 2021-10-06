@@ -37,4 +37,7 @@ public class ItemsController implements ItemsApi {
         return ResponseEntity.ok().body(storage.updateTodoItem(id, todoItem));
     }
 
-}
+    @Override
+    public ResponseEntity<TodoItem> deleteTodoItem(Integer id) {
+        return ResponseEntity.ok().body(storage.deleteTodoItem(id));
+    }}

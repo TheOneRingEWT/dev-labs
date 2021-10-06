@@ -39,7 +39,7 @@ public class ItemsDb {
     public TodoItem updateById(int id, TodoItem item) {
 
         this.items = items.stream().map(todo -> {
-            if (id == todo.getId().intValue()) {
+            if (item.getId().equals(id)) {
                 return item;
             } else {
                 return todo;
@@ -47,5 +47,14 @@ public class ItemsDb {
         }).collect(Collectors.toList());
 
         return items.stream().filter(todo -> todo.getId().equals(id)).findFirst().get();
+    }
+
+    public TodoItem deleteById(int id) {
+
+        TodoItem itemDeleted = items.stream().filter(todo -> todo.getId().equals(id)).findFirst().get();
+
+        this.items = items.stream().filter(item -> !item.getId().equals(id)).collect(Collectors.toList());
+
+        return itemDeleted;
     }
 }

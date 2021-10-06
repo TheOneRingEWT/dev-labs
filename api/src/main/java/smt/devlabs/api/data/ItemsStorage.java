@@ -34,4 +34,9 @@ public class ItemsStorage implements ItemsStorageApi {
     public TodoItem updateTodoItem(int id, TodoItem item) {
         return db.updateById(id, item);
     }
+
+    @Override
+    public TodoItem deleteTodoItem(int id) {
+        return db.deleteById(id);
+    }
 }

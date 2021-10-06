@@ -11,4 +11,6 @@ public interface ItemsStorageApi {
     public TodoItem retrieveTodoItem(int id);
 
     public TodoItem updateTodoItem(int id, TodoItem todoItem);
+
+    public TodoItem deleteTodoItem(int id);
 }

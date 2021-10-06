@@ -100,4 +100,22 @@ public class ItemsStorageTest {
         // Assert
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("Should delete to-do item by id")
+    public void whenDeleteTodoItemCalled_thenDeleteAndReturnTodoItem() {
+        // Arrange
+        int givenId = 1234;
+        TodoItem deletedItem = new TodoItem().id(givenId);
+
+        when(mockItemsDb.deleteById(givenId)).thenReturn(deletedItem);
+
+        TodoItem expected = deletedItem;
+
+        // Act
+        TodoItem actual = subject.deleteTodoItem(givenId);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }

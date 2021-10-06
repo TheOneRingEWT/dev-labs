@@ -140,4 +140,23 @@ public class ItemsDbTest {
         // Assert
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("Should be able to clear all items")
+    public void whenDeleteByIdCalled_thenDeletItemAndReturn() {
+        // Arrange
+        int givenId = 1234;
+        TodoItem itemInDb = new TodoItem().id(givenId).description("some-description");
+
+        when(mockIdCounter.getNewId()).thenReturn(givenId);
+
+        TodoItem expected = itemInDb;
+
+        // Act
+        subject.add(itemInDb);
+        TodoItem actual = subject.deleteById(givenId);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }
