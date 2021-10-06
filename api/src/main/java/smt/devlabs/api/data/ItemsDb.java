@@ -17,10 +17,6 @@ public class ItemsDb {
         this.idCounter = idCounter;
     }
 
-    public void clear() {
-        items.clear();
-    }
-
     public TodoItem add(TodoItem item) {
         item.id(idCounter.getNewId());
         items.add(item);
@@ -39,7 +35,7 @@ public class ItemsDb {
     public TodoItem updateById(int id, TodoItem item) {
 
         this.items = items.stream().map(todo -> {
-            if (item.getId().equals(id)) {
+            if (todo.getId().equals(id)) {
                 return item;
             } else {
                 return todo;

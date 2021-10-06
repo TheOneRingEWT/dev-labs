@@ -31,7 +31,7 @@ public class ItemsStorageTest {
     }
 
     @Test
-    @DisplayName("Should return TodoItemList from 'database'")
+    @DisplayName("Should return TodoItemList from database")
     public void whenRetrieveItemsList_thenReturnItemsList() {
         // Arrange
         TodoItem dbItem = new TodoItem();
@@ -50,7 +50,7 @@ public class ItemsStorageTest {
     }
 
     @Test
-    @DisplayName("Should add to-do item to 'database' and default completed to false")
+    @DisplayName("Should add to-do item to database and default completed=false")
     public void whenCreateTodoItemCalled_thenPersistWithDefaultCompleted() {
         // Arrange
         String postedDescription = "i was just posted";
@@ -84,7 +84,7 @@ public class ItemsStorageTest {
     }
 
     @Test
-    @DisplayName("Should retrieve to-do item by id")
+    @DisplayName("Should update to-do item by id")
     public void whenUpdateTodoItemCalled_thenReturnTodoItem() {
         // Arrange
         int givenId = 1234;
