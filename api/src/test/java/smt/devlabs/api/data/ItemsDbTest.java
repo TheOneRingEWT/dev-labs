@@ -98,4 +98,25 @@ public class ItemsDbTest {
         // Assert
         assertEquals(expected, subject.findAll());
     }
+
+    @Test
+    @DisplayName("Should be able to find item by id")
+    public void whenFindByIdCalled_thenReturnItem() {
+        // Arrange
+        int givenId = 1224;
+
+        String postedDescription = "i was just posted";
+        TodoItem addedItem = new TodoItem().description(postedDescription);
+
+        when(mockIdCounter.getNewId()).thenReturn(givenId);
+
+        TodoItem expected = new TodoItem().id(givenId).description(postedDescription);
+
+        // Act
+        subject.add(addedItem);
+        TodoItem actual = subject.findById(givenId);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }

@@ -23,11 +23,15 @@ public class ItemsDb {
     public TodoItem add(TodoItem item) {
         item.id(idCounter.getNewId());
         items.add(item);
-        
+
         return items.get(items.size() - 1);
     }
 
     public List<TodoItem> findAll() {
         return items;
+    }
+
+    public TodoItem findById(int id) {
+        return items.stream().filter(item -> id == item.getId()).findFirst().get();
     }
 }

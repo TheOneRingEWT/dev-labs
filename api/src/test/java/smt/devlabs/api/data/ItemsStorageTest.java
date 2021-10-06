@@ -64,4 +64,22 @@ public class ItemsStorageTest {
         // Assert
         verify(mockItemsDb).add(expected);
     }
+
+    @Test
+    @DisplayName("Should retrieve to-do item by id")
+    public void whenRetreiveTodoItemCalled_thenReturnTodoItem() {
+        // Arrange
+        int givenId = 1234;
+        TodoItem dbItem = new TodoItem().id(givenId);
+
+        when(mockItemsDb.findById(givenId)).thenReturn(dbItem);
+
+        TodoItem expected = dbItem;
+
+        // Act
+        TodoItem actual = subject.retrieveTodoItem(givenId);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }

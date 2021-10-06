@@ -40,18 +40,8 @@ public class ItemsControllerIntegrationTest {
     private ItemsDb mockItemsDb;
 
     @Test
-    @DisplayName("GET request to /items should return Response Status OK")
-    public void whenRetrieveItemsList_thenResponseOk() {
-        // Act
-        ResponseEntity<TodoItemList> actual = this.restTemplate.getForEntity("/items", TodoItemList.class);
-
-        // Assert
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-    }
-
-    @Test
-    @DisplayName("GET request to /items should return a TodoItemList with persisted to-do items")
-    public void whenTodoItemInDb_thenRetrieveItemsList() {
+    @DisplayName("GET request to /items should return Response OK with a TodoItemList with persisted to-do items")
+    public void whenTodoItemInDb_thenResponseOKWithTodoItemsList() {
         // Arrange
         List<TodoItem> itemsInDbList = new ArrayList<>();
         TodoItem itemInDb = new TodoItem().id(1).description("some-description").completed(false);
@@ -66,25 +56,13 @@ public class ItemsControllerIntegrationTest {
         ResponseEntity<TodoItemList> actual = this.restTemplate.getForEntity("/items", TodoItemList.class);
 
         // Assert
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(expected, actual.getBody());
     }
 
     @Test
-    @DisplayName("POST request to /items should return Response Status OK")
-    public void whenCreateTodoItem_thenResponseOk() {
-        // Arrange
-        TodoItem item1 = new TodoItem();
-
-        // Act
-        ResponseEntity<TodoItem> actual = this.restTemplate.postForEntity("/items", item1, TodoItem.class);
-
-        // Assert
-        assertEquals(HttpStatus.OK, actual.getStatusCode());
-    }
-
-    @Test
-    @DisplayName("POST request to /items should return the todo item that was just created")
-    public void whenCreateTodoItem_thenResponseWithAddedItem() {
+    @DisplayName("POST request to /items should return Response OK with the todo item that was just created")
+    public void whenCreateTodoItem_thenResponseOkWithAddedItem() {
         // Arrange
         TodoItem postItem = new TodoItem().description("some-description");
 
@@ -96,6 +74,26 @@ public class ItemsControllerIntegrationTest {
         TodoItem expected = itemInDb;
 
         // Assert
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(expected, actual.getBody());
+    }
+
+    @Test
+    @DisplayName("GET request to /items/{id} should return Response OK with a TodoItem with that ID")
+    public void whenTodoItemInDb_thenResponseOKWithTodoItem() {
+        // Arrange
+        int givenId = 1234;
+
+        TodoItem itemInDb = new TodoItem().id(givenId).description("some-description").completed(false);
+        when(mockItemsDb.findById(givenId)).thenReturn(itemInDb);
+
+        TodoItem expected = itemInDb;
+
+        // Act
+        ResponseEntity<TodoItem> actual = this.restTemplate.getForEntity("/items/" + givenId, TodoItem.class);
+
+        // Assert
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(expected, actual.getBody());
     }
 }

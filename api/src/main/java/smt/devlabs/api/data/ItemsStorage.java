@@ -24,4 +24,9 @@ public class ItemsStorage implements ItemsStorageApi {
         todoItem.completed(false);
         return db.add(todoItem);
     }
+
+    @Override
+    public TodoItem retrieveTodoItem(int id) {
+        return db.findById(id);
+    }
 }

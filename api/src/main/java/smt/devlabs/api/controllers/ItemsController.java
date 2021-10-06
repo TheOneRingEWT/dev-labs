@@ -27,4 +27,9 @@ public class ItemsController implements ItemsApi {
         return ResponseEntity.ok().body(storage.createTodoItem(todoItem));
     }
 
+    @Override
+    public ResponseEntity<TodoItem> retrieveTodoItem(Integer id) {
+        return ResponseEntity.ok().body(storage.retrieveTodoItem(id));
+    }
+
 }
