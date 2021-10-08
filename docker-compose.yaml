@@ -1,0 +1,26 @@
+# ---------------------------------------------------------
+# CLASSIFICATION: UNCLASSIFIED//CONTROLLED UNCLASSIFIED INFORMATION
+# RELEASABLE TO: USA
+# ---------------------------------------------------------
+#
+# Prognostics And Health Management (PHM)
+#
+# FILENAME: docker-compose.yaml
+
+version: "3.3"
+
+services: 
+    todo-ui:
+        build: 
+            context: ./ui
+            dockerfile: Dockerfile
+        command: npm start
+        ports:
+            - "3000:3000" 
+            
+    todo-api:
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        ports:
+        - 8080:8080
