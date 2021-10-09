@@ -1,25 +1,45 @@
 #!/bin/bash
 # This script will install and config common tools and configurations used in SMT Windows/WSL development
 
-# update distro
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" # absolute path of this script
+
+# update distro and install packages
 sudo apt update \
 && sudo apt upgrade -y \
 && sudo apt install -y \
-ca-certificates \
-curl
+openjdk-8-jdk \
+openjdk-11-jdk
 
 # install Oh My Bash!
-./scripts/ohmybash.sh
+curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh | bash
 
-# install openJDK 8 and Node
-./scripts/java-node.sh
+printf "\nInstalling Node Version Manager with latest Node LTS"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.bashrc
+nvm install lts/*
 
 # configure git
-./scripts/git.sh
+printf "\nAdd git user and email to ~/.gitconfig file\n"
+printf "Enter your DI2E username"
+read USER
+git config --global user.name $USER
+
+printf "Enter your DI2E email"
+read EMAIL
+git config --global user.email $EMAIL
+
+# add git aliases
+printf "\nAdding git aliases to ~/.gitconfig file\n"
+cat "$SCRIPT_DIR/git-aliases" >> ~/.gitconfig
+
+# use cache for credential helper so that user is not prompted for credentials for each git remote operation
+git config --global credential.helper cache
 
 # configure docker
-./scripts/docker.sh
+printf "\nLogging on to docker-hub.di2e.net"
+docker login https://docker-hub.di2e.net
 
-# source .bashrc fils so that current shell contains changes
-source ~/.bashrc
-printf "\nSetup is complete\n"
+printf "\nLogging on to docker-rain.di2e.net"
+docker login https://docker-rain.di2e.net
+
+printf "\nClose and open a new terminal to complete setup.\n"

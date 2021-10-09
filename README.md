@@ -5,7 +5,10 @@ This repository contains examples for dev labs.
 ## Install WSL2 on Windows
 1. Update Windows by pressing the Windows logo key + R, type **ms-settings:windowsupdate**, press Enter or select OK and follow the instructions on the screen update Windows
 1. Once Windows has been updated:
-    1. Install WSL2 on Windows. Use the default distro, Ubuntu. Instructions [here](https://docs.microsoft.com/en-us/windows/wsl/setup/environment#install-wsl)
+    1. Install WSL2 on Windows. Use the distro Ubuntu from the Microsoft Store. Instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-manual)
+
+        NOTE: You do not need a Microsoft account to install Windows Terminal. If asked to sign in or create an account cancel or close the window.
+
     1. Setup a user/password in Ubuntu. Instructions [here](https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-user-info)
 
         NOTE: The rest of this README assumes the Linux distro installed is referred to as **Ubuntu**. If your distro is called **Ubuntu-20.04**, for example, use that name instead.
@@ -36,10 +39,11 @@ This repository contains examples for dev labs.
 
 ## Setup the WSL environment
 1. In the Windows Terminal, start a shell session in Ubuntu
-1. Type in the following commands: `sudo apt update && sudo apt upgrade -y && sudo apt install git -y`
+1. Type in the following commands: `sudo apt update && sudo apt upgrade -y`
+1. Create a **workspaces** directory and change to that directory: `mkdir workspaces && cd workspaces`
 1. Clone the `dev-labs` repo: `git clone https://bitbucket.di2e.net/scm/rain/dev-labs.git`
     - Enter your DI2E username and password when prompted
-1. Change into the **setup** directory: `cd setup`
+1. Change into the **dev-labs/setup** directory: `cd dev-labs/setup`
 1. Run the **setup-wsl.sh** script: `sudo ./setup-wsl.sh`
 1. Enter your Ubuntu password when prompted
 1. Follow the on-screen instructions
