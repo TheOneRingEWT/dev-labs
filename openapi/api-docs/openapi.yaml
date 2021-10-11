@@ -28,19 +28,10 @@ paths:
       summary: Create a to-do item
       operationId: createTodoItem
       requestBody:
-        description: To-do item
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/TodoItem"
+        $ref: "#/components/requestBodies/TodoItem"
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoItem"
+          $ref: "#/components/responses/200_TodoItem"
   /items/{id}:
     get:
       tags:
@@ -57,11 +48,7 @@ paths:
           description: Todo item ID
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoItem"
+          $ref: "#/components/responses/200_TodoItem"
     put:
       tags:
         - items
@@ -76,19 +63,10 @@ paths:
             format: int32
           description: Todo item ID
       requestBody:
-        description: To-do item
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/TodoItem"
+        $ref: "#/components/requestBodies/TodoItem"
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoItem"
+          $ref: "#/components/responses/200_TodoItem"
     delete:
       tags:
         - items
@@ -104,11 +82,7 @@ paths:
           description: Todo item ID
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TodoItem"
+          $ref: "#/components/responses/200_TodoItem"
 
 components:
   schemas:
@@ -135,4 +109,19 @@ components:
           type: boolean
       required:
         - description
+  requestBodies:
+    TodoItem:
+      description: To-do item
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TodoItem"
+  responses:
+    200_TodoItem:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TodoItem"
         

@@ -4,7 +4,7 @@
  *
 */
 
-package org.openapitools;
+package smt.devlabs.openapi.invoker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

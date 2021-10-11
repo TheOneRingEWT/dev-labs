@@ -21,7 +21,7 @@ dependencies {
 
 task codegenSpringServer(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
         generatorName = 'spring'
-		inputSpec = "${projectDir}/api-docs/openapi_v1.yaml"
+		inputSpec = "${projectDir}/api-docs/openapi.yaml"
         outputDir = "${buildDir}/springServer"
         configFile = "${projectDir}/config-files/springServer-config.json"
 }
