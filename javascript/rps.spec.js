@@ -1,4 +1,4 @@
-const rps = require('./rps.js');
+const { rps } = require('./rps.js');
 
 describe("rps", () => {
 

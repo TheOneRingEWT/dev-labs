@@ -2,4 +2,4 @@ const rps = () => {
     return null
 }
 
-module.exports = rps
+module.exports = { rps }
