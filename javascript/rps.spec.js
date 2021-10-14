@@ -15,4 +15,18 @@ describe("rps", () => {
         // Assert
         expect(actual).toBe(expected)
     })
+
+    it("should return 'P2 wins' when P1 chooses Scissors and P2 chooses Rock", () => {
+        // Arrange
+        const p1 = 'Scissors'
+        const p2 = 'Rock'
+
+        const expected = 'P2 wins'
+
+        // Act
+        const actual = rps(p1, p2)
+
+        // Assert
+        expect(actual).toBe(expected)
+    })
 })
