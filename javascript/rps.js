@@ -4,6 +4,9 @@ const rps = (p1, p2) => {
         p1 === 'Rock' && p2 === 'Paper')
         return 'P2 wins'
 
+    if (p1 === p2)
+        return 'Draw'
+
     return 'P1 wins'
 }
 

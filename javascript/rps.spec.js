@@ -85,4 +85,37 @@ describe("rps", () => {
         // Assert
         expect(actual).toBe(expected)
     })
+
+    it("should return 'Draw' when P1 chooses Rock and P2 chooses Rock", () => {
+        // Arrange, Act, Assert
+        const p1 = 'Rock'
+        const p2 = 'Rock'
+
+        const expected = 'Draw'
+        const actual = rps(p1, p2)
+
+        expect(actual).toBe(expected)
+    })
+
+    it("should return 'Draw' when P1 chooses Scissors and P2 chooses Scissors", () => {
+        // Arrange, Act, Assert
+        const p1 = 'Scissors'
+        const p2 = 'Scissors'
+
+        const expected = 'Draw'
+        const actual = rps(p1, p2)
+
+        expect(actual).toBe(expected)
+    })
+
+    it("should return 'Draw' when P1 chooses Paper and P2 chooses Paper", () => {
+        // Arrange, Act, Assert
+        const p1 = 'Paper'
+        const p2 = 'Paper'
+
+        const expected = 'Draw'
+        const actual = rps(p1, p2)
+
+        expect(actual).toBe(expected)
+    })
 })
