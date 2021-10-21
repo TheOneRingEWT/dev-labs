@@ -17,7 +17,6 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import smt.devlabs.api.DoItApplication;
-import smt.devlabs.api.data.ItemsDb;
 import smt.devlabs.openapi.model.TodoItem;
 import smt.devlabs.openapi.model.TodoItemList;
 
@@ -28,9 +27,6 @@ public class ItemsControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @Autowired
-    private ItemsDb itemsDb;
 
     @Test
     @DisplayName("POST request to /items should return Response OK with the todo item that was just created")
@@ -51,13 +47,14 @@ public class ItemsControllerIntegrationTest {
     @DisplayName("GET request to /items should return Response OK with a TodoItemList with persisted to-do items")
     public void whenTodoItemInDb_thenResponseOKWithTodoItemsList() {
         // Arrange
-        TodoItem itemInDb = new TodoItem().id(1).description("some-description").completed(false);
-        itemsDb.add(itemInDb);
+        TodoItem postItem = new TodoItem().description("some-description");
 
+        TodoItem expectedTodoItem = new TodoItem().id(1).description("some-description").completed(false);
         TodoItemList expected = new TodoItemList();
-        expected.addItemsItem(itemInDb);
+        expected.addItemsItem(expectedTodoItem);
 
         // Act
+        this.restTemplate.postForEntity("/items", postItem, TodoItem.class);
         ResponseEntity<TodoItemList> actual = this.restTemplate.getForEntity("/items", TodoItemList.class);
 
         // Assert
@@ -71,10 +68,10 @@ public class ItemsControllerIntegrationTest {
         // Arrange
         int givenId = 1;
 
-        TodoItem itemInDb = new TodoItem().id(givenId).description("some-description").completed(false);
-        itemsDb.add(itemInDb);
+        TodoItem postItem = new TodoItem().description("some-description");
+        this.restTemplate.postForEntity("/items", postItem, TodoItem.class);
 
-        TodoItem expected = itemInDb;
+        TodoItem expected = new TodoItem().id(givenId).description("some-description").completed(false);
 
         // Act
         ResponseEntity<TodoItem> actual = this.restTemplate.getForEntity("/items/" + givenId, TodoItem.class);
@@ -90,8 +87,8 @@ public class ItemsControllerIntegrationTest {
         // Arrange
         int givenId = 1;
 
-        TodoItem itemInDb = new TodoItem().id(givenId).description("old-description").completed(false);
-        itemsDb.add(itemInDb);
+        TodoItem postItem = new TodoItem().description("old-description");
+        this.restTemplate.postForEntity("/items", postItem, TodoItem.class);
 
         TodoItem putItem = new TodoItem().id(givenId).description("new-description").completed(false);
         HttpEntity<TodoItem> httpEntity = new HttpEntity<>(putItem);
@@ -101,7 +98,7 @@ public class ItemsControllerIntegrationTest {
         // Act
         // Using exchange() because put() returns void and we need a Response
         ResponseEntity<TodoItem> actual = this.restTemplate.exchange("/items/" + givenId, HttpMethod.PUT, httpEntity,
-                                                                     TodoItem.class);
+                TodoItem.class);
 
         // Assert
         assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -114,15 +111,15 @@ public class ItemsControllerIntegrationTest {
         // Arrange
         int givenId = 1;
 
-        TodoItem itemInDb = new TodoItem().id(givenId).description("some-description").completed(false);
-        itemsDb.add(itemInDb);
+        TodoItem postItem = new TodoItem().description("some-description");
+        this.restTemplate.postForEntity("/items", postItem, TodoItem.class);
 
-        TodoItem expected = itemInDb;
+        TodoItem expected = new TodoItem().id(givenId).description("some-description").completed(false);
 
         // Act
         // Using exchange() because delete() returns void and we need a Response
         ResponseEntity<TodoItem> actual = this.restTemplate.exchange("/items/" + givenId, HttpMethod.DELETE, null,
-                                                                     TodoItem.class);
+                TodoItem.class);
 
         // Assert
         assertEquals(HttpStatus.OK, actual.getStatusCode());
