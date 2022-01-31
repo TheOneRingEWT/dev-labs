@@ -1,9 +1,0 @@
-.gradle
-build/
-bin/
-
-### VS Code ###
-.vscode/
-.settings
-.classpath
-.project
